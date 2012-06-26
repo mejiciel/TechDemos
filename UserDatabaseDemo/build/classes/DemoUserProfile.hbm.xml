@@ -3,13 +3,24 @@
 
 <hibernate-mapping package="com.meji.UserManagement">
 
-    <class name="UserProfile" table="UserProfile">
+    <class name="UserProfile" table="userprofile">
         <id name="id" column="UserId">
-            <generator class="increment"/>
+            <generator class="native"/>
         </id>
         <property name="name" type="string" column="UserName"/>
         <property name="email"/>
         <property name="password" />
+
+    </class>
+    
+    <class name="UserInfo" table="userotherinfo">
+    	<id name="id" column="UserId"/>
+    	<property name="address"/>
+    	<property name="interests" column="Hobbies"/>
+    	<property name="industry" />
+    	<property name="cellNumber" column="CellPhone"/>
+    	<property name="homeNumber" column="HomePhone"/> 
+    	
     </class>
 
 </hibernate-mapping>
