@@ -19,6 +19,13 @@ public class UserManager {
 		mysqlFactory = cfg.buildSessionFactory(serviceRegistry);
 	}
 	
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+		mysqlFactory.close();
+	}
+
 	public Boolean CheckUserExistByName(String userName) throws Exception
 	{
 		Session sess=mysqlFactory.getCurrentSession();
@@ -32,8 +39,18 @@ public class UserManager {
 		return true;
 		
 	}
-	public Boolean CheckUserExist(UserProfile user)
+	public Boolean CheckUserExist(UserProfile user) throws Exception
 	{
+		Session sess=mysqlFactory.getCurrentSession();
+		Transaction t=sess.beginTransaction();
+		List<UserProfile> usps=sess.createQuery("from UserProfile where UserName=:PARAM_NAME AND Email=:PARAM_EMAIL")
+				.setString("PARAM_NAME", user.getName())
+				.setString("PARAM_EMAIL", user.getEmail()).list();
+		if(usps.size()==0)
+			return false;
+		else if(usps.size()>1)
+			throw new Exception("Duplicated Name");
 		
+		return true;
 	}
 }
