@@ -43,9 +43,9 @@ public class UserManager {
 	{
 		Session sess=mysqlFactory.getCurrentSession();
 		Transaction t=sess.beginTransaction();
-		List<UserProfile> usps=sess.createQuery("from UserProfile where UserName=:PARAM_NAME AND Email=:PARAM_EMAIL")
-				.setString("PARAM_NAME", user.getName())
-				.setString("PARAM_EMAIL", user.getEmail()).list();
+		List<UserProfile> usps=sess.createQuery("from UserProfile where UserName=:@NAME AND Email=:EMAIL")
+				.setString("NAME", user.getName())
+				.setString("EMAIL", user.getEmail()).list();
 		if(usps.size()==0)
 			return false;
 		else if(usps.size()>1)
@@ -53,4 +53,50 @@ public class UserManager {
 		
 		return true;
 	}
+
+	public int CreateUser(UserProfile user) {
+		Session sess=mysqlFactory.getCurrentSession();
+		Transaction t=sess.beginTransaction();
+		Integer id=(Integer)sess.save(user);
+		t.commit();
+		return id;
+		
+	}
+
+	public boolean CheckUserExistByEmail(String email) {
+		// TODO Auto-generated method stub
+		Session sess=mysqlFactory.getCurrentSession();
+		Transaction t=sess.beginTransaction();
+		List<UserProfile> usps=(List<UserProfile>)sess.createQuery("from UserProfile where Email=:EMAIL")
+				.setString("EMAIL", email).list();
+		if(usps.size()==1)
+			return true;
+		return false;
+	}
+
+	public String GetPasswordByEmail(String email) {
+		// TODO Auto-generated method stub
+		Session sess=mysqlFactory.getCurrentSession();
+		Transaction t=sess.beginTransaction();
+		List<UserProfile> usps=(List<UserProfile>)sess.createQuery("from UserProfile where Email=:EMAIL")
+				.setString("EMAIL", email).list();
+		if(usps.size()==1)
+			return usps.get(0).getPassword();
+		return null;
+	}
+
+	public boolean ValidateUser(UserProfile user) {
+		// TODO Auto-generated method stub
+		Session sess=mysqlFactory.getCurrentSession();
+		Transaction t=sess.beginTransaction();
+		List<UserProfile> usps=sess.createQuery("from UserProfile where UserName=:NAME AND Password=:PASSWORD")
+				.setString("NAME", user.getName())
+				.setString("PASSWORD", user.getPassword()).list();
+		if(usps.size()==1)
+			return true;
+		
+		return false;
+	}
+
+
 }

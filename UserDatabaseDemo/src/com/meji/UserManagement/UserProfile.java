@@ -1,6 +1,7 @@
 package com.meji.UserManagement;
 
-public class UserProfile {
+public class UserProfile{
+	
 	private int id;
 	private String name;
 	private String password;
