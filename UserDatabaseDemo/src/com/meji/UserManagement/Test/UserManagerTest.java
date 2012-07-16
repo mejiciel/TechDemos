@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.meji.UserManagement.UserDBManger;
 import com.meji.UserManagement.UserManager;
 import com.meji.UserManagement.UserProfile;
 
@@ -12,7 +13,7 @@ public class UserManagerTest {
 	@Test
 	public void CheckUserTest()
 	{
-		UserManager umgr=new UserManager();
+		UserDBManger umgr=new UserManager();
 		try {
 			Assert.assertTrue(umgr.CheckUserExistByName("meji"));
 		} catch (Exception e) {
@@ -24,7 +25,7 @@ public class UserManagerTest {
 	@Test
 	public void CheckUserByObjectTest()
 	{
-		UserManager umgr=new UserManager();
+		UserDBManger umgr=new UserManager();
 		UserProfile user=new UserProfile();
 		
 		

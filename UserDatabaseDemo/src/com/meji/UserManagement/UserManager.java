@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-public class UserManager {
+public class UserManager implements UserDBManger {
 	private SessionFactory mysqlFactory;
 	public UserManager()
 	{
@@ -26,6 +26,10 @@ public class UserManager {
 		mysqlFactory.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#CheckUserExistByName(java.lang.String)
+	 */
+	@Override
 	public Boolean CheckUserExistByName(String userName) throws Exception
 	{
 		Session sess=mysqlFactory.getCurrentSession();
@@ -39,6 +43,10 @@ public class UserManager {
 		return true;
 		
 	}
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#CheckUserExist(com.meji.UserManagement.UserProfile)
+	 */
+	@Override
 	public Boolean CheckUserExist(UserProfile user) throws Exception
 	{
 		Session sess=mysqlFactory.getCurrentSession();
@@ -54,6 +62,10 @@ public class UserManager {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#CreateUser(com.meji.UserManagement.UserProfile)
+	 */
+	@Override
 	public int CreateUser(UserProfile user) {
 		Session sess=mysqlFactory.getCurrentSession();
 		Transaction t=sess.beginTransaction();
@@ -63,6 +75,10 @@ public class UserManager {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#CheckUserExistByEmail(java.lang.String)
+	 */
+	@Override
 	public boolean CheckUserExistByEmail(String email) {
 		// TODO Auto-generated method stub
 		Session sess=mysqlFactory.getCurrentSession();
@@ -74,6 +90,10 @@ public class UserManager {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#GetPasswordByEmail(java.lang.String)
+	 */
+	@Override
 	public String GetPasswordByEmail(String email) {
 		// TODO Auto-generated method stub
 		Session sess=mysqlFactory.getCurrentSession();
@@ -85,6 +105,10 @@ public class UserManager {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.meji.UserManagement.UserDBManger#ValidateUser(com.meji.UserManagement.UserProfile)
+	 */
+	@Override
 	public boolean ValidateUser(UserProfile user) {
 		// TODO Auto-generated method stub
 		Session sess=mysqlFactory.getCurrentSession();
