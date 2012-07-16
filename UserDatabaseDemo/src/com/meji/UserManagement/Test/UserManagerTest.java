@@ -4,9 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.meji.UserManagement.UserDBManger;
 import com.meji.UserManagement.UserManager;
 import com.meji.UserManagement.UserProfile;
+import com.meji.UserManagement.Interface.UserDBManger;
 
 public class UserManagerTest {
 

@@ -9,6 +9,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+import com.meji.UserManagement.Interface.UserDBManger;
+
 public class UserManager implements UserDBManger {
 	private SessionFactory mysqlFactory;
 	public UserManager()
