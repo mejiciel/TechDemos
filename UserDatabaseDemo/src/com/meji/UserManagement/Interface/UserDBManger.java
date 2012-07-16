@@ -1,4 +1,6 @@
-package com.meji.UserManagement;
+package com.meji.UserManagement.Interface;
+
+import com.meji.UserManagement.UserProfile;
 
 public interface UserDBManger {
 
