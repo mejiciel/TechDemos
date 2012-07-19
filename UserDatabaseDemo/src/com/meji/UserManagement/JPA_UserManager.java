@@ -9,24 +9,36 @@ import javax.persistence.Persistence;
 import com.meji.UserManagement.Interface.UserDBManger;
 
 public class JPA_UserManager implements UserDBManger {
-	private EntityManagerFactory emf=Persistence.createEntityManagerFactory("UserDatabaseDemo");
+	private EntityManagerFactory emf;
 	private EntityManager emgr;
 	public JPA_UserManager()
 	{
+		emf=Persistence.createEntityManagerFactory("UserDatabaseDemo");
 		emgr=emf.createEntityManager();
 	}
 	@Override
-	public Boolean CheckUserExistByName(String userName) throws Exception {
+	protected void finalize() throws Throwable {
 		// TODO Auto-generated method stub
-		return null;
+		super.finalize();
+		emf.close();
+	}
+	@Override
+	public Boolean CheckUserExistByName(String userName) throws Exception {
+
+		List<UserProfile> usps=emgr.createQuery("from UserProfile where name=?1")
+				.setParameter(1, userName)
+				.getResultList();
+		if(usps.size()!=1) return false;
+
+		return true;
 	}
 
 	@Override
 	public Boolean CheckUserExist(UserProfile user) throws Exception {
-		// TODO Auto-generated method stub
-		List<UserProfile> usps=emgr.createQuery("select * from UserProfile where name=?1 and email=?2")
-								.setParameter(1, user.getName())
-								.setParameter(2, user.getEmail())
+ 
+		List<UserProfile> usps=emgr.createQuery("select * from UserProfile where name=?NAME and email=?EMAIL")
+								.setParameter("NAME", user.getName())
+								.setParameter("EMAIL", user.getEmail())
 								.getResultList();
 		if(usps.size()!=1) return false;
 		
